@@ -1,0 +1,3 @@
+rootProject.name = 'rekrutacjepstrg3'
+
+include 'library-api', 'library-ui'
