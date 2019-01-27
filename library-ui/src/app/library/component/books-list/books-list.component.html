@@ -1,0 +1,4 @@
+<div *ngFor="let book of books">
+  <p>{{book.author}}<br>
+    <a routerLink="/book/{{book.id}}">{{book.title}}</a></p>
+</div>
