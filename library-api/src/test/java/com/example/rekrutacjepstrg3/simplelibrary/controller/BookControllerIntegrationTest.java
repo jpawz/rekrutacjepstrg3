@@ -48,7 +48,7 @@ public class BookControllerIntegrationTest {
 				.contentType(ContentType.JSON)
 				.body(book)
 			.when()
-				.post("/book/add")
+				.post("/api/book/add")
 			.then()
 				.statusCode(status);
 			// @formatter:on
@@ -76,7 +76,7 @@ public class BookControllerIntegrationTest {
 			.contentType(ContentType.JSON)
 			.body(body)
 		.when()
-			.put("/book/" + body.getId())
+			.put("/api/book/" + body.getId())
 		.then()
 			.statusCode(expectedStatus);
 		// @formatter:on

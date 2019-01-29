@@ -51,7 +51,7 @@ public class CheckoutControllerIntegrationTest {
 		Book book = bookRepository.findByTitle("first book").get(0);
 		// @formatter:off
 		when()
-			.post("/borrow/" + book.getId())
+			.post("/api/borrow/" + book.getId())
 		.then()
 			.statusCode(HttpStatus.OK.value())
 			.assertThat().body("checkoutDate", containsString(LocalDate.now().toString()))
@@ -70,7 +70,7 @@ public class CheckoutControllerIntegrationTest {
 			.contentType(ContentType.JSON)
 			.body(checkout)
 		.when()
-			.put("/return")
+			.put("/api/return")
 		.then()
 			.statusCode(HttpStatus.OK.value())
 			.assertThat().body("returnDate", containsString(LocalDate.now().toString()));
