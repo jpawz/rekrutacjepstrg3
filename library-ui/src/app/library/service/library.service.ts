@@ -29,4 +29,9 @@ export class LibraryService {
     const url = `${this.bookUrl}add`;
     return this.http.post<Book>(url, book, httpOptions);
   }
+
+  deleteBook(id: number): Observable<Book> {
+    const url = `${this.bookUrl}${id}`;
+    return this.http.delete<Book>(url);
+  }
 }
