@@ -9,7 +9,7 @@ import { LibraryService } from '../../service/library.service';
   styleUrls: ['./edit-book.component.css']
 })
 export class EditBookComponent implements OnInit {
-  book: Book;
+  book = new Book(0, '', '', '');
 
   constructor(private route: ActivatedRoute, private service: LibraryService) {}
 
@@ -22,12 +22,12 @@ export class EditBookComponent implements OnInit {
     if (id == null) {
       this.book = new Book(0, '', '', '');
     } else {
-      this.book = this.service.getBook(+id);
+      this.service.getBook(+id).subscribe(book => (this.book = book));
     }
   }
 
   onSubmit() {
-    this.service.saveBook(this.book);
+    this.service.saveBook(this.book).subscribe();
     this.book = new Book(0, '', '', '');
   }
 }
