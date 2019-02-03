@@ -30,6 +30,11 @@ export class LibraryService {
     return this.http.post<Book>(url, book, httpOptions);
   }
 
+  updateBook(book: Book): Observable<Book> {
+    const url = `${this.bookUrl}${book.id}`;
+    return this.http.put<Book>(url, book, httpOptions);
+  }
+
   deleteBook(id: number): Observable<Book> {
     const url = `${this.bookUrl}${id}`;
     return this.http.delete<Book>(url);
