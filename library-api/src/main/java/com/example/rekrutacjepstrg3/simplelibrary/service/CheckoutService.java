@@ -23,6 +23,10 @@ public class CheckoutService {
 		this.bookRepository = bookRepository;
 	}
 
+	public Checkout getCheckoutForBookId(long bookId) {
+		return checkoutRepository.findFirstByBookIdOrderByCheckoutDate(bookId).orElse(null);
+	}
+
 	public Checkout borrowBook(long bookId) {
 		if (bookCanBeBorrowed(bookId)) {
 			return checkoutRepository.save(

@@ -3,6 +3,7 @@ package com.example.rekrutacjepstrg3.simplelibrary.controller;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.rekrutacjepstrg3.simplelibrary.domain.Book;
 import com.example.rekrutacjepstrg3.simplelibrary.domain.Checkout;
@@ -27,6 +29,7 @@ import io.restassured.http.ContentType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Transactional
 public class CheckoutControllerIntegrationTest {
 
 	@LocalServerPort
@@ -75,6 +78,26 @@ public class CheckoutControllerIntegrationTest {
 			.statusCode(HttpStatus.OK.value())
 			.assertThat().body("returnDate", containsString(LocalDate.now().toString()));
 		// @formatter:on
+	}
+
+	@Test
+	public void testGetCheckoutByBookId() {
+		Book neverBorrowedBook = bookRepository.findByTitle("third book").get(0);
+		Book borrowedBook = bookRepository.findByTitle("first book").get(0);
+		checkoutRepository.save(new Checkout(borrowedBook, LocalDateTime.now().minusDays(2), null));
+		// @formatter:off
+		when()
+			.get("/api/checkout/" + neverBorrowedBook.getId())
+		.then()
+			.statusCode(HttpStatus.NO_CONTENT.value());
+
+		when()
+			.get("/api/checkout/" + borrowedBook.getId())
+		.then()
+			.statusCode(HttpStatus.OK.value())
+			.and().body("checkoutDate", notNullValue());
+		// @formatter:on
+
 	}
 
 }

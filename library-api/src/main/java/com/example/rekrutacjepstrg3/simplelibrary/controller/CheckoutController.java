@@ -2,6 +2,8 @@ package com.example.rekrutacjepstrg3.simplelibrary.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +23,15 @@ public class CheckoutController {
 	@Autowired
 	CheckoutService service;
 
+	@GetMapping("/checkout/{bookId}")
+	public ResponseEntity<Checkout> getCheckoutByBookId(@PathVariable long bookId) {
+		Checkout checkout = service.getCheckoutForBookId(bookId);
+		if (checkout == null) {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(checkout, HttpStatus.OK);
+	}
+
 	@PostMapping("/borrow/{bookId}")
 	public Checkout checkoutBook(@PathVariable long bookId) {
 		try {
@@ -34,4 +45,5 @@ public class CheckoutController {
 	public Checkout returnBook(@RequestBody Checkout checkout) {
 		return service.returnBook(checkout);
 	}
+
 }
