@@ -44,7 +44,7 @@ public class CheckoutServiceTest {
 	public void canBorrowNeverBorrowedBook() {
 		// given
 		long bookId = 1L;
-		given(checkoutRepository.findFirstByBookIdOrderByCheckoutDate(bookId))
+		given(checkoutRepository.findFirstByBookIdOrderByCheckoutDateDesc(bookId))
 				.willReturn(Optional.ofNullable(null));
 		given(bookRepository.findById(bookId))
 				.willReturn(Optional.ofNullable(new Book("title", "author", "")));
@@ -64,7 +64,7 @@ public class CheckoutServiceTest {
 		book.setId(bookId);
 		Checkout checkout = new Checkout(book, LocalDateTime.now().minusDays(3),
 				LocalDateTime.now().minusDays(1));
-		given(checkoutRepository.findFirstByBookIdOrderByCheckoutDate(bookId))
+		given(checkoutRepository.findFirstByBookIdOrderByCheckoutDateDesc(bookId))
 				.willReturn(Optional.ofNullable((checkout)));
 		given(bookRepository.findById(bookId)).willReturn(Optional.ofNullable(book));
 
@@ -82,7 +82,7 @@ public class CheckoutServiceTest {
 		Book book = new Book("title", "author", "descr");
 		book.setId(bookId);
 		Checkout checkout = new Checkout(book, LocalDateTime.now().minusDays(3), null);
-		given(checkoutRepository.findFirstByBookIdOrderByCheckoutDate(bookId))
+		given(checkoutRepository.findFirstByBookIdOrderByCheckoutDateDesc(bookId))
 				.willReturn(Optional.ofNullable((checkout)));
 		given(bookRepository.findById(bookId)).willReturn(Optional.ofNullable(book));
 

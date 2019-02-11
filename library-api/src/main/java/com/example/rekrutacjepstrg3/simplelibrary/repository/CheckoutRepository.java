@@ -10,6 +10,6 @@ import com.example.rekrutacjepstrg3.simplelibrary.domain.Checkout;
 @Repository
 public interface CheckoutRepository extends CrudRepository<Checkout, Long> {
 
-	Optional<Checkout> findFirstByBookIdOrderByCheckoutDate(long bookId);
+	Optional<Checkout> findFirstByBookIdOrderByCheckoutDateDesc(long bookId);
 
 }

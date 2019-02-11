@@ -24,7 +24,7 @@ public class CheckoutService {
 	}
 
 	public Checkout getCheckoutForBookId(long bookId) {
-		return checkoutRepository.findFirstByBookIdOrderByCheckoutDate(bookId).orElse(null);
+		return checkoutRepository.findFirstByBookIdOrderByCheckoutDateDesc(bookId).orElse(null);
 	}
 
 	public Checkout borrowBook(long bookId) {
@@ -42,7 +42,7 @@ public class CheckoutService {
 	}
 
 	private boolean bookCanBeBorrowed(long bookId) {
-		Checkout c = checkoutRepository.findFirstByBookIdOrderByCheckoutDate(bookId).orElse(null);
+		Checkout c = checkoutRepository.findFirstByBookIdOrderByCheckoutDateDesc(bookId).orElse(null);
 		if (c == null || c.getReturnDate() != null) {
 			return true;
 		}
