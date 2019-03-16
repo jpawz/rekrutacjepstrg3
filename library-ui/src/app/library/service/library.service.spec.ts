@@ -1,12 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LibraryService } from './library.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('BookService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let libraryService: LibraryService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [LibraryService],
+      imports: [HttpClientModule]
+    });
+
+    libraryService = TestBed.get(LibraryService);
+  });
 
   it('should be created', () => {
-    const service: LibraryService = TestBed.get(LibraryService);
-    expect(service).toBeTruthy();
+    expect(libraryService).toBeTruthy();
   });
 });
