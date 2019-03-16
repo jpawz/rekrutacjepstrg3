@@ -1,8 +1,16 @@
-<h1>Book details:</h1>
-<p>title: {{book.title}}</p>
-<p>author: {{book.author}}</p>
-<p>{{book.description}}</p>
+<div id="bookTitle">
+  <h1>{{book.title}}</h1>
+</div>
+<div id="bookAuthor">
+  <h2>{{book.author}}</h2>
+</div>
+<div id="bookDescription">
+  <p>{{book.description}}</p>
+</div>
 <a routerLink="/edit/{{book.id}}">Edit</a>
-<button (click)="borrowBook()" *ngIf="canBeBorrowed">Borrow</button>
-<button (click)="returnBook()" *ngIf="canBeReturned">Return</button>
-<button (click)="deleteBook()">Delete</button>
+<button id="borrowBtn" (click)="borrowBook()" *ngIf="!canBeBorrowed">Borrow</button>
+<button id="returnBtn" (click)="returnBook()" *ngIf="!canBeReturned">Return</button>
+<button id="deleteBtn" (click)="deleteBook()">Delete</button>
+<ul id="checkouts">
+  <li *ngFor="let checkout of checkouts">{{checkout.checkoutDate}} : {{checkout.returnDate}}</li>
+</ul>

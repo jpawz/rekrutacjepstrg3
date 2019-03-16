@@ -1,6 +1,9 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { EditBookComponent } from './edit-book.component';
+
 
 describe('EditBookComponent', () => {
   let component: EditBookComponent;
@@ -8,9 +11,10 @@ describe('EditBookComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditBookComponent ]
+      declarations: [EditBookComponent],
+      imports: [RouterTestingModule, HttpClientModule, ReactiveFormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +25,16 @@ describe('EditBookComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('form invalid when empty', () => {
+    fixture.detectChanges();
+    expect(component.bookForm.invalid).toBeTruthy();
+  });
+
+  it('form should be valid when required fields are not empty', () => {
+    component.bookForm.controls['title'].setValue('title');
+    component.bookForm.controls['author'].setValue('author');
+    expect(component.bookForm.valid).toBeTruthy();
   });
 });

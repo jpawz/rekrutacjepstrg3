@@ -1,10 +1,11 @@
-<form (ngSubmit)="onSubmit()" #bookForm="ngForm">
-  <label for="id">Id</label>
-  <input type="number" id="id" [(ngModel)]="book.id" name="id" required>
-  <label for="title">title</label>
-  <input type="text" id="title" [(ngModel)]="book.title" name="title" required>
-  <label for="author">author</label>
-  <input type="text" id="author" [(ngModel)]="book.author" name="author" required>
-  <textarea [(ngModel)]="book.description" name="description" rows="5" cols="40"></textarea><br />
-  <button type="submit" [disabled]="bookForm.form.invalid">Save</button>
+<form (ngSubmit)="onSubmit()" [formGroup]="bookForm">
+  <label>Id:
+    <input type="number" formControlName="id"></label>
+  <label>Title
+    <input type="text" formControlName="title" required></label>
+  <label>Author
+    <input type="text" formControlName="author" required></label>
+  <label>Description:
+    <textarea formControlName="description" rows="5" cols="40"></textarea></label>
+  <button type="submit" [disabled]="!bookForm.valid">Save</button>
 </form>
