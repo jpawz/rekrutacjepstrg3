@@ -41,9 +41,9 @@ export class LibraryService {
     return this.http.delete<Book>(url);
   }
 
-  getCheckout(bookId: number): Observable<Checkout> {
-    const url = `${this.libraryUrl}checkout/${bookId}`;
-    return this.http.get<Checkout>(url);
+  getCheckouts(bookId: number, page: number): Observable<any> {
+    const url = `${this.libraryUrl}checkout/${bookId}?page=${page}&size=5&sort=checkoutDate,desc`;
+    return this.http.get<any>(url);
   }
 
   borrowBook(bookId: number): Observable<Checkout> {

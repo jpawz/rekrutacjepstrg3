@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '../../model/book';
 import { LibraryService } from '../../service/library.service';
@@ -9,9 +10,15 @@ import { LibraryService } from '../../service/library.service';
   styleUrls: ['./edit-book.component.css']
 })
 export class EditBookComponent implements OnInit {
-  book = new Book(-1, '', '', '');
+  bookForm = this.fb.group({
+    id: [-1],
+    title: ['', Validators.required],
+    author: ['', Validators.required],
+    description: ['']
+  });
 
-  constructor(private route: ActivatedRoute, private service: LibraryService) {}
+
+  constructor(private route: ActivatedRoute, private service: LibraryService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.getBook();
@@ -19,19 +26,34 @@ export class EditBookComponent implements OnInit {
 
   getBook(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    if (id == null) {
-      this.book = new Book(-1, '', '', '');
-    } else {
-      this.service.getBook(+id).subscribe(book => (this.book = book));
+    if (id != null) {
+      this.service.getBook(+id).subscribe(book => {
+        const b: Book = Object.assign({}, this.bookForm.value);
+        b.id = book.id;
+        b.title = book.title;
+        b.author = book.author;
+        b.description = book.description;
+      });
     }
   }
 
   onSubmit() {
-    if (this.book.id === -1) {
-      this.service.saveBook(this.book).subscribe();
+    if (this.bookForm.value.book.id === -1) {
+      this.service.saveBook(this.bookForm.value).subscribe(book => {
+        const b: Book = Object.assign({}, this.bookForm.value);
+        b.id = book.id;
+        b.title = book.title;
+        b.author = book.author;
+        b.description = book.description;
+      });
     } else {
-      this.service.updateBook(this.book).subscribe();
+      this.service.updateBook(this.bookForm.value).subscribe(book => {
+        const b: Book = Object.assign({}, this.bookForm.value);
+        b.id = book.id;
+        b.title = book.title;
+        b.author = book.author;
+        b.description = book.description;
+      });
     }
-    this.book = new Book(-1, '', '', '');
   }
 }
