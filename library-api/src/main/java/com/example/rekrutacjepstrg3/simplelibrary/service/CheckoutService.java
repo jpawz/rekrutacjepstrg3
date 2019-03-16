@@ -3,6 +3,10 @@ package com.example.rekrutacjepstrg3.simplelibrary.service;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.rekrutacjepstrg3.simplelibrary.domain.Checkout;
@@ -23,8 +27,8 @@ public class CheckoutService {
 		this.bookRepository = bookRepository;
 	}
 
-	public Checkout getCheckoutForBookId(long bookId) {
-		return checkoutRepository.findFirstByBookIdOrderByCheckoutDateDesc(bookId).orElse(null);
+	public Page<Checkout> getCheckoutsForBookId(long bookId, Pageable pageable) {
+		return checkoutRepository.findAll(pageable);
 	}
 
 	public Checkout borrowBook(long bookId) {
