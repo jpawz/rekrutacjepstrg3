@@ -7,7 +7,7 @@
 <div id="bookDescription">
   <p>{{book.description}}</p>
 </div>
-<a routerLink="/edit/{{book.id}}">Edit</a>
+<a [routerLink]="['/edit',book.id]">Edit</a>
 <button id="borrowBtn" (click)="borrowBook()" *ngIf="!canBeBorrowed">Borrow</button>
 <button id="returnBtn" (click)="returnBook()" *ngIf="!canBeReturned">Return</button>
 <button id="deleteBtn" (click)="deleteBook()">Delete</button>

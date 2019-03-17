@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Book } from '../../model/book';
 import { LibraryService } from '../../service/library.service';
 
 @Component({
@@ -28,31 +27,19 @@ export class EditBookComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id != null) {
       this.service.getBook(+id).subscribe(book => {
-        const b: Book = Object.assign({}, this.bookForm.value);
-        b.id = book.id;
-        b.title = book.title;
-        b.author = book.author;
-        b.description = book.description;
+        this.bookForm.setValue(book);
       });
     }
   }
 
   onSubmit() {
-    if (this.bookForm.value.book.id === -1) {
+    if (this.bookForm.value.id === -1) {
       this.service.saveBook(this.bookForm.value).subscribe(book => {
-        const b: Book = Object.assign({}, this.bookForm.value);
-        b.id = book.id;
-        b.title = book.title;
-        b.author = book.author;
-        b.description = book.description;
+        this.bookForm.setValue(book);
       });
     } else {
       this.service.updateBook(this.bookForm.value).subscribe(book => {
-        const b: Book = Object.assign({}, this.bookForm.value);
-        b.id = book.id;
-        b.title = book.title;
-        b.author = book.author;
-        b.description = book.description;
+        this.bookForm.setValue(book);
       });
     }
   }
