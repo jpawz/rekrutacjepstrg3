@@ -47,18 +47,13 @@ export class BookDetailsComponent implements OnInit {
   }
 
   private setBorrowReturnValues() {
-    if (this.latestCheckout.checkoutDate && this.latestCheckout.returnDate) {
+    if ((!this.latestCheckout.checkoutDate && !this.latestCheckout.returnDate)
+      || (this.latestCheckout.checkoutDate && this.latestCheckout.returnDate)) {
       this.canBeBorrowed = true;
       this.canBeReturned = false;
     } else if (this.latestCheckout.checkoutDate && !this.latestCheckout.returnDate) {
       this.canBeBorrowed = false;
       this.canBeReturned = true;
-    } else if (this.latestCheckout.checkoutDate) {
-      this.canBeBorrowed = true;
-      this.canBeReturned = true;
-    } else {
-      this.canBeBorrowed = true;
-      this.canBeReturned = false;
     }
   }
 
